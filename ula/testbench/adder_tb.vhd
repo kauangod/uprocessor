@@ -11,7 +11,7 @@ architecture a_adder_tb of adder_tb is
             in0, in1 : in unsigned (15 downto 0);
             sum      : out unsigned (15 downto 0)
         );
-        end component;
+    end component;
     
     signal in0, in1  : unsigned (15 downto 0);
     signal sum       : unsigned (15 downto 0);

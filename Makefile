@@ -1,5 +1,5 @@
-FILES = adder mux16b 
-TESTBENCH = adder_tb
+FILES = adder mux16b subtractor r_shifter
+TESTBENCH = r_shifter_tb
 #MAIN = ULA $(MAIN:=.vhd)
 WORKDIR = work
 
