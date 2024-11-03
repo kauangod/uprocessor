@@ -8,11 +8,11 @@ end entity;
 architecture a_subtractor_tb of subtractor_tb is
     component subtractor
         port(
-            in0,in1: in unsigned(15 downto 0);
-            sub: out unsigned(15 downto 0)
+            in0,in1 : in unsigned(15 downto 0);
+            sub     : out unsigned(15 downto 0)
         );
     end component;
-    signal in0,in1,sub: unsigned(15 downto 0);
+    signal in0, in1, sub : unsigned(15 downto 0);
 
     begin
     uut: subtractor port map(

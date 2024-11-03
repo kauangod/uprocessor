@@ -4,8 +4,8 @@ use ieee.numeric_std.all;
 
 entity subtractor is
     port(
-        in0,in1: in unsigned(15 downto 0);
-        sub: out unsigned(15 downto 0)
+        in0,in1 : in unsigned(15 downto 0);
+        sub     : out unsigned(15 downto 0)
     );
 end entity;
 

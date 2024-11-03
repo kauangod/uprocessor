@@ -16,8 +16,8 @@ entity mux16b is
 architecture a_mux16b of mux16b is
 begin
 	saida <= entr0 when sel = "00" else
-	         entr0 when sel = "01" else
-	         entr0 when sel = "10" else
-	         entr0 when sel = "11" else
+	         entr1 when sel = "01" else
+	         entr2 when sel = "10" else
+	         entr3 when sel = "11" else
 			 "0000000000000000";
 end architecture;
