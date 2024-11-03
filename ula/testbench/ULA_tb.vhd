@@ -14,6 +14,7 @@ architecture a_ULA_tb of ULA_tb is
             overflow, negative, zero : out std_logic
         );
     end component;
+    
     signal in0, in1, saida  : unsigned(15 downto 0);
     signal sel              : unsigned(1 downto 0);
     signal V, N, Z          : std_logic;
@@ -37,6 +38,10 @@ architecture a_ULA_tb of ULA_tb is
         in0 <= "0001100000011111"; in1 <= "0001100000011111"; sel <= "01"; wait for 50 ns;
         in0 <= "0111111111111111"; in1 <= "0111111111111111"; sel <= "00"; wait for 50 ns;
         in0 <= "1111111111111000"; in1 <= "0011111111111111"; sel <= "01"; wait for 50 ns;
+        in0 <= "0000000000000000"; in1 <= "0000000000000000"; sel <= "10"; wait for 50 ns;
+        in0 <= "0000000000000001"; in1 <= "0011111111111111"; sel <= "10"; wait for 50 ns;
+        in0 <= "1111111111111000"; in1 <= "0011111111111111"; sel <= "10"; wait for 50 ns;
+        in0 <= "1111111111111111"; in1 <= "1111111111111111"; sel <= "11"; wait for 50 ns;
         wait;
     end process;
 end architecture;

@@ -26,13 +26,25 @@ architecture a_ULA of ULA is
     end component;
     component mux16b is
         port(
-            entr0, entr1 : in unsigned(15 downto 0);
-            sel          : in unsigned(1 downto 0);
-            saida        : out unsigned(15 downto 0)
+            entr0, entr1, entr2, entr3 : in unsigned(15 downto 0);
+            sel                        : in unsigned(1 downto 0);
+            saida                      : out unsigned(15 downto 0)
         );
     end component;
-    signal sum, sub, mux_out : unsigned(15 downto 0);
-    signal of_sum, of_sub    : std_logic;
+    component le is
+        port(
+            in0, in1 : in unsigned(15 downto 0);
+            is_less_or_equal : out unsigned(15 downto 0)
+        );
+    end component;
+    component r_shifter is
+        port(
+            i_n                       : in unsigned(15 downto 0);
+            msb_shifted               : out unsigned(15 downto 0)
+        );
+    end component;
+    signal sum, sub, mux_out, msb_shifted, is_less_or_equal : unsigned(15 downto 0);
+    signal of_sum, of_sub                                   : std_logic;
 
     begin
     adder0: adder 
@@ -47,14 +59,27 @@ architecture a_ULA of ULA is
             in1 => in1,
             sub => sub
         ); 
+    le0: le
+        port map(
+            in0 => in0,
+            in1 => in1,
+            is_less_or_equal => is_less_or_equal
+        );
+    r_shifter0: r_shifter
+        port map(
+            i_n => in0,
+            msb_shifted => msb_shifted
+        );
     mux0: mux16b 
         port map(
             entr0 => sum,
             entr1 => sub,
+            entr2 => is_less_or_equal,
+            entr3 => msb_shifted,
             sel => sel,
             saida => mux_out
         );
-
+    
     saida <= mux_out;
 
     negative <= mux_out(15);

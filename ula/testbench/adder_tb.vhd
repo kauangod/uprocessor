@@ -3,7 +3,7 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity adder_tb is
-end entity adder_tb;
+end entity;
 
 architecture a_adder_tb of adder_tb is
     component adder is
