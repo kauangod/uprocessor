@@ -1,0 +1,16 @@
+{
+  "Acumulador ou não": "ULA com acumulador",
+  "Largura da ROM / instrução em bits": [17],
+  "Número de registradores no banco": [7], 
+  "ADD ops": "ADD com dois operandos apenas",
+  "Carga de constantes": "Carrega diretamente com LD sem somar",
+  "SUB ops": "Subtração com dois operandos apenas",
+  "ADD ctes": "ADD apenas entre registradores, nunca com constantes",
+  "SUB ctes": "Subtração apenas entre registradores",
+  "Subtração": "Subtração com SUB sem borrow",
+  "Comparações": "Comparação com CMPR ou CMPI",
+  "Saltos condicionais": ["BLE", "BMI"],
+  "Saltos": "Incondicional é absoluto e condicional é relativo",
+  "Validação -- final do loop": "Detecção do MSB setado usando SHIFT RIGHT",
+  "Validação -- complicações": "Primos < 1024"
+}
