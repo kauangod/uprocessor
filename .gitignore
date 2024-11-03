@@ -1,6 +1,8 @@
-Makefile
 README.md
+Makefile
 *.o
 *.exe
 *.cf
 *.gtkw
+*.ghw
+**/Makefile
