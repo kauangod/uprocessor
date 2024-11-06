@@ -15,8 +15,8 @@ architecture a_ULA_tb of ULA_tb is
         );
     end component;
     
-    signal in0, in1, saida  : unsigned(15 downto 0);
-    signal sel              : unsigned(1 downto 0);
+    signal in0, in1, saida  : unsigned(15 downto 0) := (others => '0');
+    signal sel              : unsigned(1 downto 0) := (others => '0');
     signal V, N, Z          : std_logic;
 
     begin

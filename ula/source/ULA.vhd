@@ -44,7 +44,7 @@ architecture a_ULA of ULA is
             saida                      : out unsigned(15 downto 0)
         );
     end component;
-    signal sum, sub, mux_out, out_xor, shifted : unsigned(15 downto 0);
+    signal sum, sub, mux_out, out_xor, shifted : unsigned(15 downto 0) := (others => '0');
     signal of_sum, of_sub                      : std_logic;
 
     begin
