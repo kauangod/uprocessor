@@ -8,8 +8,8 @@ end entity;
 architecture a_ULA_tb of ULA_tb is
     component ULA
         port(
-            in0, in1                 : in unsigned(15 downto 0) := (others => '0');
-            sel                      : in unsigned(1 downto 0) := (others => '0');
+            in0, in1                 : in unsigned(15 downto 0);
+            sel                      : in unsigned(1 downto 0);
             saida                    : out unsigned(15 downto 0);
             overflow, negative, zero : out std_logic
         );
@@ -17,7 +17,7 @@ architecture a_ULA_tb of ULA_tb is
     
     signal in0, in1, saida  : unsigned(15 downto 0) := (others => '0');
     signal sel              : unsigned(1 downto 0) := (others => '0');
-    signal V, N, Z          : std_logic := '0';
+    signal V, N, Z          : std_logic;
 
     begin
         uut: ULA 
