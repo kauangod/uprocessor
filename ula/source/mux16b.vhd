@@ -9,7 +9,7 @@ entity mux16b is
 		entr2 : in unsigned(15 downto 0);
 		entr3 : in unsigned(15 downto 0);
 		sel   : in unsigned(1 downto 0);
-		saida : out unsigned (15 downto 0)
+		saida : out unsigned (15 downto 0) := (others => '0')
 	);
 	end entity;
 	

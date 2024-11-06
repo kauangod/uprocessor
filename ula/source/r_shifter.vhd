@@ -12,5 +12,7 @@ end entity;
 
 architecture a_r_shifter of r_shifter is
 begin
-    shifted <= (15 downto 16-to_integer(unsigned(shift_n)) => '0') & i_n(15 downto to_integer(unsigned(shift_n))) when to_integer(unsigned(shift_n))<=16;
+    shifted <= i_n when to_integer(unsigned(shift_n)) = 0 else
+               (others => '0') when to_integer(unsigned(shift_n)) >= 16 else
+               (15 downto 16-to_integer(unsigned(shift_n)) => '0') & i_n(15 downto to_integer(unsigned(shift_n)));
 end architecture;
