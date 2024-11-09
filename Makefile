@@ -1,14 +1,9 @@
 # vhdl files
-FILES = src/*
+FILES = ./register_file/src/*.vhd ./ula/src/*.vhd ./*.vhd
 
 # testbench
-TESTBENCH = banco_regs
-TESTBENCHPATH = tb/${TESTBENCHFILE}*
-FILES = ./ula/source/*.vhd ./*.vhd
-
-# testbench
-TESTBENCH = ULA
-TESTBENCHPATH = ./ULA/testbench/${TESTBENCHFILE}*
+TESTBENCH = top_level
+TESTBENCHPATH = ./${TESTBENCHFILE}*
 TESTBENCHFILE = ${TESTBENCH}_tb
 WORKDIR = work
 
@@ -47,4 +42,4 @@ view:
 	@$(WAVEFORM_VIEWER) --dump=$(WORKDIR)/$(TESTBENCHFILE).vcd
 
 clean:
-	@rm -rf $(WORKDIR) *.o *.lst *.exe
+	@rm -rf $(WORKDIR)

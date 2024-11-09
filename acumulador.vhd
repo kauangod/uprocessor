@@ -8,12 +8,12 @@ entity acumulador is
         reset    : in std_logic;
         wr_en    : in std_logic;
         data_in  : in unsigned(15 downto 0);
-        data_out : out unsigned(15 downto 0)
+        data_out : out unsigned(15 downto 0) := (others => '0')
     );
 end entity;
 
 architecture a_acumulador of acumulador is
-    signal registro : unsigned(15 downto 0);
+    signal registro : unsigned(15 downto 0) := (others => '0');
 begin
     process(clk, reset, wr_en)
     begin
