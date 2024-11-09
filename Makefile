@@ -4,6 +4,11 @@ FILES = src/*
 # testbench
 TESTBENCH = banco_regs
 TESTBENCHPATH = tb/${TESTBENCHFILE}*
+FILES = ./ula/source/*.vhd ./*.vhd
+
+# testbench
+TESTBENCH = ULA
+TESTBENCHPATH = ./ULA/testbench/${TESTBENCHFILE}*
 TESTBENCHFILE = ${TESTBENCH}_tb
 WORKDIR = work
 
