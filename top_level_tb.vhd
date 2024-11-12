@@ -83,6 +83,10 @@ architecture a_top_level_tb of top_level_tb is
         wr_en_banco <= '0';
         reg_r_banco <= "000";
         sel_op <= "00";
+
+        wait for 100 ns;
+        wr_en_acum <= '0';
+        
         wait for 100 ns;
         wait;
     end process;

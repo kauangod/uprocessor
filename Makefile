@@ -42,4 +42,4 @@ view:
 	@$(WAVEFORM_VIEWER) --dump=$(WORKDIR)/$(TESTBENCHFILE).vcd
 
 clean:
-	@rm -rf $(WORKDIR)
+	@rm -rf $(WORKDIR) ./*.exe ./*.o
