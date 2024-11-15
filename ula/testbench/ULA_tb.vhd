@@ -2,11 +2,11 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ULA_tb is
+entity ula_tb is
 end entity;
 
-architecture a_ULA_tb of ULA_tb is
-    component ULA
+architecture a_ula_tb of ula_tb is
+    component ula
         port(
             in0, in1                 : in unsigned(15 downto 0);
             sel                      : in unsigned(1 downto 0);
@@ -20,7 +20,7 @@ architecture a_ULA_tb of ULA_tb is
     signal V, N, Z          : std_logic;
 
     begin
-        uut: ULA 
+        uut: ula 
             port map(
                 in0 => in0,
                 in1 => in1,

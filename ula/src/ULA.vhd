@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity ULA is
+entity ula is
     port(
         in0, in1                  : in unsigned(15 downto 0);
         sel                       : in unsigned(1 downto 0);
@@ -11,7 +11,7 @@ entity ULA is
     );
 end entity;
 
-architecture a_ULA of ULA is
+architecture a_ula of ula is
     component subtractor is
         port(
             in0, in1 : in unsigned(15 downto 0);
