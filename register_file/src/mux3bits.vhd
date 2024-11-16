@@ -25,5 +25,5 @@ begin
              entr4 when sel = "100" else
              entr5 when sel = "101" else
              entr6 when sel = "110" else
-             x"0000";
+             "0000000000000000";
 end architecture;

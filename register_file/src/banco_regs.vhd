@@ -53,58 +53,58 @@ architecture a_banco_regs of banco_regs is
 
     reg0: reg16bits
         port map (
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en0,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en0,
+            data_in  => data_wr,
             data_out => saida_reg0
         );
     reg1: reg16bits
         port map(
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en1,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en1,
+            data_in  => data_wr,
             data_out => saida_reg1
         );
     reg2: reg16bits
         port map (
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en2,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en2,
+            data_in  => data_wr,
             data_out => saida_reg2
         );
     reg3: reg16bits
         port map (
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en3,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en3,
+            data_in  => data_wr,
             data_out => saida_reg3
         );
     reg4: reg16bits
         port map (
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en4,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en4,
+            data_in  => data_wr,
             data_out => saida_reg4
         );
     reg5: reg16bits
         port map (
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en5,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en5,
+            data_in  => data_wr,
             data_out => saida_reg5
         );
     reg6: reg16bits
         port map (
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en6,
-            data_in => data_wr,
+            clk      => clk,
+            reset    => reset,
+            wr_en    => wr_en6,
+            data_in  => data_wr,
             data_out => saida_reg6
         );
     mux0: mux3bits 
@@ -116,7 +116,7 @@ architecture a_banco_regs of banco_regs is
             entr4 => saida_reg4,
             entr5 => saida_reg5,
             entr6 => saida_reg6,
-            sel => reg_r,
+            sel   => reg_r,
             saida => mux0_out
         );
     

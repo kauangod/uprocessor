@@ -12,7 +12,6 @@ architecture a_rom_tb of rom_tb is
             address : in unsigned(6 downto 0);
             data    : out unsigned(16 downto 0)
         );
-
     end component;
 
     constant period_time : time := 100 ns;

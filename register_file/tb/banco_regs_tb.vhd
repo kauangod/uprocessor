@@ -19,7 +19,7 @@ architecture a_banco_regs_tb of banco_regs_tb is
     end component;
 
     constant period_time             : time        := 100 ns;
-    signal   finished                : std_logic := '0';
+    signal   finished                : std_logic   := '0';
     signal   clk, reset              : std_logic;
     signal   wr_en                   : std_logic;
     signal   data_in, data_out       : unsigned(15 downto 0);
@@ -114,7 +114,7 @@ begin
         -- Teste 8: Leitura do registrador 1 (não deve ter mudado)
         wait for 100 ns;
         reg_r <= "001";
-        
+
         wait;
     end process;
 end architecture a_banco_regs_tb;

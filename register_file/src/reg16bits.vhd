@@ -18,7 +18,7 @@ begin
     process(clk, reset, wr_en)
     begin
         if reset = '1' then
-            registro <= x"0000";
+            registro <= "0000000000000000";
         elsif wr_en = '1' then
             if rising_edge(clk) then
                 registro <= data_in;
