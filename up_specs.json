@@ -12,5 +12,10 @@
   "Saltos condicionais": ["BLE", "BMI"],
   "Saltos": "Incondicional é absoluto e condicional é relativo",
   "Validação -- final do loop": "Detecção do MSB setado usando SHIFT RIGHT",
-  "Validação -- complicações": "Primos < 1024"
+  "Validação -- complicações": "Primos < 1024",
+
+  "Codificação das instruções:":
+  "mnemônico | opcode (16 downto 13) | funct (xx downto yy) |  observações",
+  "jump      |         1111          |        xxxx          |  endereço (6 downto 0)",
+  "nop       |         0000          |        xxxx          |"
 }

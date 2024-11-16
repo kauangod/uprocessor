@@ -5,8 +5,8 @@ use ieee.numeric_std.all;
 entity rom is
     port(
         clk     : in std_logic;
-        address : in unsigned(6 downto 0);
-        data    : out unsigned(16 downto 0)
+        address : in unsigned(6 downto 0) := (others => '0');
+        data    : out unsigned(16 downto 0) := (others => '0')
     );
 end entity;
 
@@ -16,7 +16,7 @@ architecture a_rom of rom is
         0  => "00000000000000010",
         1  => "00000100000000000",
         2  => "00000000000000000",
-        3  => "00000000000000000",
+        3  => "11110000000000000",
         4  => "00000100000000000",
         5  => "00000000000000010",
         6  => "00000111100000011",

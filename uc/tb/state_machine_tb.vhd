@@ -7,11 +7,11 @@ end entity;
 
 architecture a_state_machine_tb of state_machine_tb is
     component state_machine
-    port(
-        	clk      : in std_logic;
+        port(
+            clk      : in std_logic;
             reset    : in std_logic;
-            data_out : out std_logic
-    );
+            state : out std_logic
+        );
     end component;
 
     constant period_time : time := 100 ns;
@@ -23,7 +23,7 @@ begin
     port map (
         clk => clk,
         reset => reset,
-        data_out => state
+        state => state
     );
     
     reset_global: process

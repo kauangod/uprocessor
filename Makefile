@@ -1,9 +1,9 @@
 # vhdl files
-FILES = ./register_file/src/*.vhd ./ula/src/*.vhd ./*.vhd
+FILES = ./register_file/src/*.vhd ./ula/src/*.vhd ./top_level/src/*.vhd ./uc/src/*.vhd
 
 # testbench
 TESTBENCH = top_level
-TESTBENCHPATH = ./${TESTBENCHFILE}*
+TESTBENCHPATH = ./top_level/tb/${TESTBENCHFILE}*
 TESTBENCHFILE = ${TESTBENCH}_tb
 WORKDIR = work
 

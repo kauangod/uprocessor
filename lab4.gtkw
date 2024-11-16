@@ -1,0 +1,32 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Sat Nov 16 17:54:54 2024
+[*]
+[dumpfile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor - Copia\work\top_level_tb.vcd"
+[dumpfile_mtime] "Sat Nov 16 17:54:11 2024"
+[dumpfile_size] 13627
+[savefile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor - Copia\lab4.gtkw"
+[timestart] 0
+[size] 1920 991
+[pos] -42 -42
+*-28.034405 519000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] top_level_tb.
+[treeopen] top_level_tb.uut.
+[sst_width] 208
+[signals_width] 200
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@22
+top_level_tb.uut.uc0.instruction[16:0]
+top_level_tb.uut.uc0.jump_addr[6:0]
+top_level_tb.uut.uc0.opcode[3:0]
+@28
+top_level_tb.uut.uc0.jump_en
+top_level_tb.uut.uc0.state
+@22
+top_level_tb.uut.pc0.data_out[6:0]
+top_level_tb.uut.pc0.data_in[6:0]
+@28
+top_level_tb.clk
+[pattern_trace] 1
+[pattern_trace] 0

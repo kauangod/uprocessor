@@ -2,7 +2,6 @@ README.md
 *.o
 *.exe
 *.cf
-*.gtkw
 *.ghw
 *.vcd
 work/
