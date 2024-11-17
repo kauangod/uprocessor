@@ -34,7 +34,7 @@ begin
             state => state
         );
     
-    opcode <= instruction(16 downto 13) when (state = '0' or nop = '1') and reset = '0' else
+    opcode <= instruction(16 downto 13) when (reset = '0' or nop = '1') and state = '0' else
               "UUUU";
 
     nop <= '1' when instruction(16 downto 13) = "0000" else
