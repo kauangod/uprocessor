@@ -24,7 +24,8 @@ architecture a_UC of UC is
 
     signal opcode : unsigned(3 downto 0) := (others => '0');
     signal state  : std_logic := '0';
-
+    signal jmp_en : std_logic := '0';
+    signal nop    : std_logic := '0';
 begin 
     st_mach: state_machine
         port map (
@@ -32,15 +33,22 @@ begin
             reset => reset,
             state => state
         );
-        
-    opcode <= instruction(16 downto 13) when state = '0' and reset = '0' else
-              "0000";
+    
+    opcode <= instruction(16 downto 13) when (state = '0' or nop = '1') and reset = '0' else
+              "UUUU";
 
-    jump_en <= '1' when opcode = "1111" and state = '0' and reset = '0' else --jump
-               '0'; 
+    nop <= '1' when instruction(16 downto 13) = "0000" else
+           '0';
+
+    jmp_en <= '1' when opcode = "1111" and state = '0' and reset = '0' and nop = '0' else 
+              '0';
+
+    jump_en <= jmp_en;
+
     jump_addr <= instruction(6 downto 0) when opcode = "1111" and reset = '0' else
-                 "0000000";
+                 "UUUUUUU";
 
-    wr_en_PC <= not state;
+    wr_en_PC <= '1' when (jmp_en = '1' or state = '1') and nop = '0' else
+                '0';
     
 end architecture;

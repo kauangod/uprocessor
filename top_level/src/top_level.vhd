@@ -12,7 +12,6 @@ entity top_level is
     --  reset_UC     : in std_logic;
         wr_en_acum   : in std_logic;
         wr_en_banco  : in std_logic;
-        wr_en_PC     : in std_logic;
         in_top       : in unsigned(15 downto 0) := (others => '0');
         sel_op       : in unsigned(1 downto 0) := (others => '0');
         reg_r_banco  : in unsigned(2 downto 0) := (others => '0');

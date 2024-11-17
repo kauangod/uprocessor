@@ -16,6 +16,6 @@
 
   "Codificação das instruções:":
   "mnemônico | opcode (16 downto 13) | funct (xx downto yy) |  observações",
-  "jump      |         1111          |        xxxx          |  endereço (6 downto 0)",
-  "nop       |         0000          |        xxxx          |"
+"1":"jump      |         1111          |        xxxx          |  endereço (6 downto 0)",
+"2": "nop       |         0000          |        xxxx          |"
 }
