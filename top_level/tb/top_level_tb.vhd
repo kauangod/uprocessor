@@ -71,8 +71,6 @@ architecture a_top_level_tb of top_level_tb is
     process
     begin
         wait for 200 ns;
-        wr_en_PC <= '1';
-        wait for 100 ns;
         wait;
     end process;
 end architecture;

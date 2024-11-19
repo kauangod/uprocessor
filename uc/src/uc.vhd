@@ -22,9 +22,8 @@ architecture a_UC of UC is
         );
     end component;
 
-    signal opcode    : unsigned(3 downto 0) := (others => '0');
-    signal state     : std_logic := '0';
-    signal jump_en_s : std_logic := '0';
+    signal opcode                : unsigned(3 downto 0) := (others => '0');
+    signal state, jump_en_s, nop : std_logic := '0';
 
 begin 
     st_mach: state_machine
@@ -37,12 +36,18 @@ begin
     opcode <= instruction(16 downto 13) when state = '0' else
               "0000";
 
-    jump_en <= '1' when opcode = "1111" and state = '0' else --jump
+    nop <= '1' when opcode = "0001" and state = '0' else
+           '0';    
+
+    jump_en_s <= '1' when opcode = "1111" and state = '0' else --jump
                '0'; 
                
     jump_addr <= instruction(6 downto 0) when opcode = "1111" else
                  "0000000";
     
-    wr_en_PC <= not state;
+    jump_en <= jump_en_s;
+    
+    wr_en_PC <= '1' when state = '0' and (jump_en_s = '1' or nop = '1') else
+                '0';
     
 end architecture;
