@@ -16,16 +16,17 @@ architecture a_top_level_tb of top_level_tb is
             sel_op       : in unsigned(1 downto 0) := (others => '0');
             reg_r_banco  : in unsigned(2 downto 0) := (others => '0');
             reg_wr_banco : in unsigned(2 downto 0) := (others => '0')
-        ); 
+        );
     end component;
 
     constant period_time                                   : time := 100 ns;
     signal   finished                                      : std_logic := '0';
-    signal   clk, reset, wr_en_acum, wr_en_banco           : std_logic := '0';   
+    signal   clk, reset, wr_en_acum, wr_en_banco, wr_en_PC : std_logic := '0';
     signal   in_top                                        : unsigned(15 downto 0) := (others => '0');
     signal   sel_op                                        : unsigned(1 downto 0)  := (others => '0');
     signal   reg_r_banco, reg_wr_banco                     : unsigned(2 downto 0)  := (others => '0');
-    
+    signal   out_rom                                       : unsigned(16 downto 0) := (others => '0');
+
     begin
         uut: top_level
         port map(
@@ -64,12 +65,10 @@ architecture a_top_level_tb of top_level_tb is
         end loop;
         wait;
     end process;
-    
+
     process
     begin
         wait for 200 ns;
-        ----------------
-        wait for 100 ns;
         wait;
     end process;
 end architecture;

@@ -1,7 +1,7 @@
 {
   "Acumulador ou não": "ULA com acumulador",
   "Largura da ROM / instrução em bits": [17],
-  "Número de registradores no banco": [7], 
+  "Número de registradores no banco": [7],
   "ADD ops": "ADD com dois operandos apenas",
   "Carga de constantes": "Carrega diretamente com LD sem somar",
   "SUB ops": "Subtração com dois operandos apenas",
@@ -14,8 +14,9 @@
   "Validação -- final do loop": "Detecção do MSB setado usando SHIFT RIGHT",
   "Validação -- complicações": "Primos < 1024",
 
-  "Codificação das instruções:":
-  "mnemônico | opcode (16 downto 13) | funct (xx downto yy) |  observações",
-"1":"jump      |         1111          |        xxxx          |  endereço (6 downto 0)",
-"2": "nop       |         0000          |        xxxx          |"
+  "Codificação das instruções": [
+    "mnemônico | opcode (16 downto 13) | funct (xx downto yy) |  observações",
+    "jump      |         1111          |        xxxx          |  endereço (6 downto 0)",
+    "nop       |         0001          |        xxxx          |"
+  ]
 }
