@@ -18,12 +18,13 @@ architecture a_UC of UC is
         port(
             clk   : in std_logic;
             reset : in std_logic;
-            state : out std_logic
+            state : out unsigned(1 downto 0)
         );
     end component;
 
-    signal opcode                : unsigned(3 downto 0) := (others => '0');
-    signal state, jump_en_s, nop : std_logic := '0';
+    signal opcode         : unsigned(3 downto 0) := (others => '0');
+    signal state          : unsigned(1 downto 0) := (others => '0');
+    signal jump_en_s, nop : std_logic := '0';
 
 begin 
     st_mach: state_machine
@@ -33,13 +34,13 @@ begin
             state => state
         );
 
-    opcode <= instruction(16 downto 13) when state = '0' else
+    opcode <= instruction(16 downto 13) when state = "00" else
               "0000";
 
-    nop <= '1' when opcode = "0001" and state = '0' else
+    nop <= '1' when opcode = "0001" and state = "00" else
            '0';    
 
-    jump_en_s <= '1' when opcode = "1111" and state = '0' else --jump
+    jump_en_s <= '1' when opcode = "1111" and state = "00" else --jump
                '0'; 
                
     jump_addr <= instruction(6 downto 0) when opcode = "1111" else
@@ -47,7 +48,7 @@ begin
     
     jump_en <= jump_en_s;
     
-    wr_en_PC <= '1' when state = '0' and (jump_en_s = '1' or nop = '1') else
+    wr_en_PC <= '1' when state = "00" and (jump_en_s = '1' or nop = '1') else
                 '0';
     
 end architecture;
