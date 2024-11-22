@@ -2,7 +2,7 @@
 FILES = ./register_file/src/*.vhd ./ula/src/*.vhd ./top_level/src/*.vhd ./uc/src/*.vhd
 
 # testbench
-TESTBENCH = top_level
+TESTBENCH = processador
 TESTBENCHPATH = ./top_level/tb/${TESTBENCHFILE}*
 TESTBENCHFILE = ${TESTBENCH}_tb
 WORKDIR = work
@@ -11,7 +11,7 @@ WORKDIR = work
 GHDL_CMD = ghdl
 GHDL_FLAGS  = --ieee=synopsys --warn-no-vital-generic --workdir=$(WORKDIR)
 
-STOP_TIME = 2000ns
+STOP_TIME = 4000ns
 # Simulation break condition
 #GHDL_SIM_OPT = --assert-level=error
 GHDL_SIM_OPT = --stop-time=$(STOP_TIME)

@@ -2,20 +2,20 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity top_level is
+entity processador is
     port(
         clk          : in std_logic;
-        reset        : in std_logic;
-        wr_en_acum   : in std_logic;
-        wr_en_banco  : in std_logic;
-        in_top       : in unsigned(15 downto 0) := (others => '0');
-        sel_op       : in unsigned(1 downto 0) := (others => '0');
-        reg_r_banco  : in unsigned(2 downto 0) := (others => '0');
-        reg_wr_banco : in unsigned(2 downto 0) := (others => '0')
+        reset        : in std_logic
+        -- wr_en_acum   : in std_logic;
+        -- wr_en_banco  : in std_logic;
+        -- in_top       : in unsigned(15 downto 0) := (others => '0');
+        -- sel_op       : in unsigned(1 downto 0) := (others => '0');
+        -- reg_r_banco  : in unsigned(2 downto 0) := (others => '0');
+        -- reg_wr_banco : in unsigned(2 downto 0) := (others => '0')
     );
 end entity;
 
-architecture a_top_level of top_level is
+architecture a_processador of processador is
     component ULA
         port(
             in0, in1                 : in unsigned(15 downto 0) := (others => '0');
@@ -62,13 +62,15 @@ architecture a_top_level of top_level is
     end component;
     component UC
         port(
-            clk         : in std_logic;
-            reset       : in std_logic;
-            ir_wr_en    : out std_logic;
-            wr_en_PC    : out std_logic;
-            jump_en     : out std_logic;
-            jump_addr   : out unsigned(6 downto 0) := (others => '0');
-            instruction : in unsigned(16 downto 0) := (others => '0')
+            clk           : in std_logic;
+            reset         : in std_logic;
+            instruction   : in unsigned(16 downto 0) := (others => '0');
+            pc_wr_en      : out std_logic;
+            ir_wr_en      : out std_logic;
+            rd            : out unsigned(2 downto 0) := (others => '0');
+            imm           : out unsigned(15 downto 0) := (others => '0');
+            ld            : out std_logic;
+            jump          : out std_logic
         );
     end component;
     component instruction_reg
@@ -81,45 +83,46 @@ architecture a_top_level of top_level is
         );
     end component;
 
-    signal out_ula, in0_ula, in1_ula     : unsigned(15 downto 0) := (others=>'0');
-    signal in_PC, out_PC, out_add1       : unsigned(6 downto 0)  := (others=>'0');
-    signal jump_en, wr_en_PC_s, ir_write : std_logic := '0';
-    signal jump_addr                     : unsigned(6 downto 0) := (others=>'0');
-    signal out_rom, out_inst_reg         : unsigned(16 downto 0) := (others=>'0');
+    signal out_ula, in0_ula, in1_ula, imm, in_acum  : unsigned(15 downto 0) := (others=>'0');
+    signal in_pc, out_pc, out_add1                  : unsigned(6 downto 0)  := (others=>'0');
+    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en : std_logic := '0';
+    signal out_rom, out_inst_reg                                 : unsigned(16 downto 0) := (others=>'0');
+    signal rd, rs                                                : unsigned(2 downto 0)  := (others=>'0');
+    signal ula_op                                                : unsigned(1 downto 0) := (others => '0');
 
     begin
     ULA0: ULA
         port map(
             in0 => in0_ula,
             in1 => in1_ula,
-            sel => sel_op,
+            sel => ula_op,
             saida => out_ula
         );
-     banco_regs0: banco_regs
+    banco_regs0: banco_regs
         port map(
             clk => clk,
             reset => reset,
-            wr_enable => wr_en_banco,
-            reg_r => reg_r_banco,
-            reg_wr => reg_wr_banco,
-            data_wr => in_top,
+            wr_enable => ld,
+            reg_r => rs,
+            reg_wr => rd,
+            data_wr => imm,
             data_out => in0_ula
         );
     acumulador0: acumulador
         port map(
             clk => clk,
             reset => reset,
-            wr_en => wr_en_acum,
-            data_in => out_ula,
+            wr_en => acum_wr_en,
+            data_in => in_acum,
             data_out => in1_ula
         );
     PC0: PC
         port map(
             clk => clk,
             reset => reset,
-            wr_en => wr_en_PC_s,
-            data_in => in_PC,
-            data_out => out_PC
+            wr_en => pc_wr_en,
+            data_in => in_pc,
+            data_out => out_pc
         );
     rom0: rom
         port map(
@@ -132,20 +135,28 @@ architecture a_top_level of top_level is
             clk         => clk,
             reset       => reset,
             instruction => out_inst_reg,
-            wr_en_PC    => wr_en_PC_s,
-            jump_en     => jump_en,
-            jump_addr   => jump_addr,
-            ir_wr_en    => ir_write
+            pc_wr_en    => pc_wr_en,
+            ir_wr_en    => ir_wr_en,
+            rd          => rd,
+            imm         => imm,
+            ld          => ld,
+            jump        => jump
         );
     inst_reg0 : instruction_reg
         port map (
             clk      => clk,
             reset    => reset,
-            wr_en    => ir_write,
+            wr_en    => ir_wr_en,
             data_in  => out_rom,
             data_out => out_inst_reg
         );
 
-    in_PC <= jump_addr when jump_en = '1' else out_PC + 1;
+    in_pc <= imm(6 downto 0) when jump = '1' else out_pc + 1;
+
+    in_acum <= imm when ld = '1' and rd = "111" else
+               out_ula;
+    
+    acum_wr_en <= '1' when ld = '1' and rd = "111" else
+                  '0';
 
 end architecture;

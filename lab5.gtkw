@@ -1,0 +1,49 @@
+[*]
+[*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
+[*] Fri Nov 22 14:49:01 2024
+[*]
+[dumpfile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor\work\processador_tb.vcd"
+[dumpfile_mtime] "Fri Nov 22 14:43:55 2024"
+[dumpfile_size] 23239
+[savefile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor\lab5.gtkw"
+[timestart] 0
+[size] 1920 991
+[pos] -74 -74
+*-29.044355 600000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] processador_tb.
+[treeopen] processador_tb.uut.
+[sst_width] 208
+[signals_width] 210
+[sst_expanded] 1
+[sst_vpaned_height] 289
+@28
+processador_tb.reset
+processador_tb.clk
+processador_tb.uut.uc0.state[1:0]
+@22
++{end acesso rom} processador_tb.uut.rom0.address[6:0]
+@c00022
++{PC data_out} processador_tb.uut.pc0.data_out[6:0]
+@28
+(0)processador_tb.uut.pc0.data_out[6:0]
+(1)processador_tb.uut.pc0.data_out[6:0]
+(2)processador_tb.uut.pc0.data_out[6:0]
+(3)processador_tb.uut.pc0.data_out[6:0]
+(4)processador_tb.uut.pc0.data_out[6:0]
+(5)processador_tb.uut.pc0.data_out[6:0]
+(6)processador_tb.uut.pc0.data_out[6:0]
+@1401200
+-group_end
+@22
++{instr_reg data_out} processador_tb.uut.inst_reg0.data_out[16:0]
++{acum data_out} processador_tb.uut.acumulador0.data_out[15:0]
+processador_tb.uut.banco_regs0.saida_reg0[15:0]
+processador_tb.uut.banco_regs0.saida_reg1[15:0]
+processador_tb.uut.banco_regs0.saida_reg2[15:0]
+processador_tb.uut.banco_regs0.saida_reg3[15:0]
+processador_tb.uut.banco_regs0.saida_reg4[15:0]
+processador_tb.uut.banco_regs0.saida_reg5[15:0]
+processador_tb.uut.banco_regs0.saida_reg6[15:0]
+processador_tb.uut.out_ula[15:0]
+[pattern_trace] 1
+[pattern_trace] 0

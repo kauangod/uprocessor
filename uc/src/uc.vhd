@@ -4,13 +4,17 @@ use ieee.numeric_std.all;
 
 entity UC is
     port(
-        clk         : in std_logic;
-        reset       : in std_logic;
-        wr_en_pc    : out std_logic;
-        jump_en     : out std_logic;
-        ir_wr_en    : out std_logic;
-        jump_addr   : out unsigned(6 downto 0) := (others => '0');
-        instruction : in unsigned(16 downto 0) := (others => '0')
+        clk           : in std_logic;
+        reset         : in std_logic;
+        instruction   : in unsigned(16 downto 0) := (others => '0');
+        pc_wr_en      : out std_logic;
+        ir_wr_en      : out std_logic;
+        rd            : out unsigned(2 downto 0) := (others => '0');
+        imm           : out unsigned(15 downto 0) := (others => '0');
+        ld            : out std_logic;
+--      data_wr_banco : out unsigned(15 downto 0) := (others => '0');
+        jump          : out std_logic
+--      jump_addr     : out unsigned(6 downto 0) := (others => '0')
     );
 end entity;
 
@@ -23,9 +27,8 @@ architecture a_UC of UC is
         );
     end component;
 
-    signal opcode         : unsigned(3 downto 0) := (others => '0');
-    signal state          : unsigned(1 downto 0) := (others => '0');
-    signal jump_en_s, nop : std_logic := '0';
+    signal opcode : unsigned(3 downto 0) := (others => '0');
+    signal state  : unsigned(1 downto 0) := (others => '0');
 
 begin
     st_mach: state_machine
@@ -35,23 +38,29 @@ begin
             state => state
         );
 
-    opcode <= instruction(16 downto 13) when state = "00" else
+    opcode <= instruction(3 downto 0) when state = "01" else
               "0000";
 
-    nop <= '1' when opcode = "0001" and state = "00" else
-           '0';
+    rd <= instruction(6 downto 4) when state = "01" else
+          "000";
+    
+    imm <= (15 downto 10 => instruction(16)) & instruction(16 downto 7) when opcode = "0001" and state = "01" else --LD
+           (15 downto 7 => instruction(16)) & instruction(16 downto 10) when opcode = "0011" and state = "01" else --Jump
+           "0000000000000000"; 
 
-    jump_en_s <= '1' when opcode = "1111" and state = "00" else
-               '0';
+    ld <= '1' when opcode = "0001" and state = "01" else
+          '0';
+      
+    jump <= '1' when opcode = "0011" and state = "01" else
+            '0';
 
-    jump_addr <= instruction(6 downto 0) when opcode = "1111" else
-                 "0000000";
-
-    jump_en <= jump_en_s;
-
-    wr_en_PC <= '1' when state = "00" and (jump_en_s = '1') else
+--    jump_addr <= instruction(16 downto 10) when opcode = "011" else
+--                 "0000000";
+               
+    PC_wr_en <= '1' when state = "01" else
                 '0';
 
     ir_wr_en <= '1' when state = "00" else
                 '0';
+                
 end architecture;

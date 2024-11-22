@@ -7,8 +7,8 @@ entity instruction_reg is
     clk      : in std_logic;
     wr_en    : in std_logic;
     reset    : in std_logic;
-    data_in  : in unsigned(16 downto 0);
-    data_out : out unsigned(16 downto 0)
+    data_in  : in unsigned(16 downto 0) := (others => '0');
+    data_out : out unsigned(16 downto 0) := (others => '0')
   );
 end entity;
 
