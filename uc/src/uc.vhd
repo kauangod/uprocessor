@@ -6,10 +6,11 @@ entity UC is
     port(
         clk         : in std_logic;
         reset       : in std_logic;
-        instruction : in unsigned(16 downto 0) := (others => '0');
         wr_en_pc    : out std_logic;
         jump_en     : out std_logic;
-        jump_addr   : out unsigned(6 downto 0) := (others => '0')
+        ir_wr_en    : out std_logic;
+        jump_addr   : out unsigned(6 downto 0) := (others => '0');
+        instruction : in unsigned(16 downto 0) := (others => '0')
     );
 end entity;
 
@@ -40,7 +41,7 @@ begin
     nop <= '1' when opcode = "0001" and state = "00" else
            '0';
 
-    jump_en_s <= '1' when opcode = "1111" and state = "00" else --jump
+    jump_en_s <= '1' when opcode = "1111" and state = "00" else
                '0';
 
     jump_addr <= instruction(6 downto 0) when opcode = "1111" else
@@ -48,7 +49,9 @@ begin
 
     jump_en <= jump_en_s;
 
-    wr_en_PC <= '1' when state = "00" and (jump_en_s = '1' or nop = '1') else
+    wr_en_PC <= '1' when state = "00" and (jump_en_s = '1') else
                 '0';
 
+    ir_wr_en <= '1' when state = "00" else
+                '0';
 end architecture;
