@@ -67,10 +67,12 @@ architecture a_processador of processador is
             instruction   : in unsigned(16 downto 0) := (others => '0');
             pc_wr_en      : out std_logic;
             ir_wr_en      : out std_logic;
+            rs            : out unsigned(2 downto 0) := (others => '0');
             rd            : out unsigned(2 downto 0) := (others => '0');
             imm           : out unsigned(15 downto 0) := (others => '0');
             ld            : out std_logic;
-            jump          : out std_logic
+            jump          : out std_logic;
+            mov           : out std_logic
         );
     end component;
     component instruction_reg
@@ -83,18 +85,18 @@ architecture a_processador of processador is
         );
     end component;
 
-    signal out_ula, in0_ula, in1_ula, imm, in_acum  : unsigned(15 downto 0) := (others=>'0');
-    signal in_pc, out_pc, out_add1                  : unsigned(6 downto 0)  := (others=>'0');
-    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en : std_logic := '0';
-    signal out_rom, out_inst_reg                                 : unsigned(16 downto 0) := (others=>'0');
-    signal rd, rs                                                : unsigned(2 downto 0)  := (others=>'0');
-    signal ula_op                                                : unsigned(1 downto 0) := (others => '0');
+    signal out_ula, in0_ula, in1_ula, imm, in_acum, banco_data_in, banco_data_out, out_acum       : unsigned(15 downto 0) := (others=>'0');
+    signal in_pc, out_pc, out_add1                       : unsigned(6 downto 0)  := (others=>'0');
+    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en : std_logic := '0';
+    signal out_rom, out_inst_reg                         : unsigned(16 downto 0) := (others=>'0');
+    signal rd, rs, banco_reg_r, banco_reg_wr                     : unsigned(2 downto 0)  := (others=>'0');
+    signal ula_op                                        : unsigned(1 downto 0) := (others => '0');
 
     begin
     ULA0: ULA
         port map(
             in0 => in0_ula,
-            in1 => in1_ula,
+            in1 => out_acum,
             sel => ula_op,
             saida => out_ula
         );
@@ -102,11 +104,11 @@ architecture a_processador of processador is
         port map(
             clk => clk,
             reset => reset,
-            wr_enable => ld,
-            reg_r => rs,
-            reg_wr => rd,
-            data_wr => imm,
-            data_out => in0_ula
+            wr_enable => banco_wr_en,
+            reg_r => banco_reg_r,
+            reg_wr => banco_reg_wr,
+            data_wr => banco_data_in,
+            data_out => banco_data_out
         );
     acumulador0: acumulador
         port map(
@@ -114,7 +116,7 @@ architecture a_processador of processador is
             reset => reset,
             wr_en => acum_wr_en,
             data_in => in_acum,
-            data_out => in1_ula
+            data_out => out_acum
         );
     PC0: PC
         port map(
@@ -137,10 +139,12 @@ architecture a_processador of processador is
             instruction => out_inst_reg,
             pc_wr_en    => pc_wr_en,
             ir_wr_en    => ir_wr_en,
+            rs          => rs,
             rd          => rd,
             imm         => imm,
             ld          => ld,
-            jump        => jump
+            jump        => jump,
+            mov         => mov
         );
     inst_reg0 : instruction_reg
         port map (
@@ -154,9 +158,24 @@ architecture a_processador of processador is
     in_pc <= imm(6 downto 0) when jump = '1' else out_pc + 1;
 
     in_acum <= imm when ld = '1' and rd = "111" else
+               banco_data_out when mov = '1' and rd = "111" else
                out_ula;
     
-    acum_wr_en <= '1' when ld = '1' and rd = "111" else
+    acum_wr_en <= '1' when (ld = '1' or mov = '1') and rd = "111" else
                   '0';
+    
+    banco_wr_en <= '1' when (ld = '1' or mov ='1') and rd /= "111" else
+                   '0';
+    
+    banco_data_in <= imm when ld = '1' and rd /= "111" else
+                     out_acum when mov='1' and rs = "111" else
+                     banco_data_out when mov='1' and rs /= "111" else
+                     (others => '0');
+
+    banco_reg_wr <= rd when (ld = '1' or mov ='1') and rd /= "111" else
+                    (others => '0');
+    
+    banco_reg_r <= rs when mov = '1' and rd /= "111" else
+                   (others => '0');
 
 end architecture;

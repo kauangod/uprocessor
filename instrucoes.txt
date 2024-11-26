@@ -16,15 +16,18 @@ CMPI      |                       |                      | ou CMPR
 opcodes:
     0000 -> nop
     0001 -> LD
-    0010 -> ULA
+    0010 -> regs
     0011 -> jump
 
 Instrução I:  imm (16 downto 7) | rd (6 downto 4) | opcode (3 downto 0) -> LD
  obs: rd 111 = acumulador
-Instrução ULA: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opcode (3 downto 0)
+Instrução reg: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opcode (3 downto 0)
     -> funct:
+    ----- ULA -------
         -> 000 - sum
         -> 001 - sub
         -> 010 - r_shift, obs: rs -> shift_n
         -> 011 - xor_op
-Instrução J:  imm (16 downto 10) | opcode (3 downto 0)
+    -----------------
+        -> 100 - mov
+Instrução J:  imm (16 downto 10) | opcode (3 downto 0) -> jump
