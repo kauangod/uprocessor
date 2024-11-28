@@ -1,6 +1,6 @@
 Codificação das instruções
 mnemônico | opcode (16 downto 13) | funct (xx downto yy) |  observações
-jump      |         1111          |        xxxx          |  endereço (6 downto 0)
+jump      |         0011          |        xxxx          |  endereço (6 downto 0)
 nop       |         0000          |        xxxx          |
 add       |                       |                      | dois operandos apenas, apenas entre registradores
 sub       |                       |                      | dois operandos apenas, apenas entre registradores
@@ -11,13 +11,14 @@ BLE       |                       |                      | relativo
 BMI       |                       |                      | relativo
 CMPR      |                       |                      | ou CMPI
 CMPI      |                       |                      | ou CMPR
- 
+
 
 opcodes:
     0000 -> nop
     0001 -> LD
     0010 -> regs
     0011 -> jump
+    0100 -> sum, sub, xor_op & r_shift
 
 Instrução I:  imm (16 downto 7) | rd (6 downto 4) | opcode (3 downto 0) -> LD
  obs: rd 111 = acumulador

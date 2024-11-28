@@ -1,0 +1,52 @@
+A largura da instrução sorteada para a nossa equipe foi de 17 bits.
+Para todas as instruções, os 4 LSB representam o opcode, sendo este igual a:
+ - 0000 para a instrução NOP;
+ - 0001 para a instrução LD;
+ - 0010 para instruções que utilizam a ULA e para a instrução mov;
+ - 0011 para a instrução JUMP.
+ 
+Para a instrução NOP, a instrução deve ser no formato a seguir:
+
+MSB  b16              b0 LSB
+     |                |
+NOP: xxxxxxxxxxxxx 0000
+onde
+	xxxxxxxxxxxxx é irrelevante.
+
+
+Para a instrução LD, temos que a instrução é na forma:
+
+MSB b16               b0 LSB
+    |                 |
+LD: iiiiiiiiii ddd 0001
+onde
+	iiiiiiiiii identifica a constante imediata;
+	ddd identifica o registrador destino.
+*Observação: ddd = "111" identifica que o registrador destino é o acumulador.
+
+
+Para as instruções que utilizam a ULA e para a instrução MOV, temos:
+
+MSB   b16                 b0 LSB
+      |                   |
+ADD:  xxxx sss 000 ddd 0010
+SUB:  xxxx sss 001 ddd 0010
+SRLI: xxxx sss 010 ddd 0010 (RIGHT SHIFT)
+XOR:  xxxx sss 011 ddd 0010
+MOV:  xxxx sss 100 ddd 0010
+onde
+	xxxx é irrelevante
+	sss identifica o registrador fonte;
+	ddd identifica o registrador destino.
+*Observação: Para todas as instruções, ddd = "111" ou sss = "111" identificam que o respectivo registrador é o acumulador. Entretando, sss = "111" somente funciona na instrução mov e as instruções da ULA sempre tem ddd = "111".
+
+
+Para a instrução JUMP, temos:
+	
+MSB   b16               b0 LSB
+      |                 |
+JUMP: iiiiiii xxxxxx 0011
+onde
+	iiiiiii identifica o endereço absoluto do salto;
+	xxxxxx é irrelevante.
+	
