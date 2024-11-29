@@ -18,7 +18,6 @@ opcodes:
     0001 -> LD
     0010 -> regs
     0011 -> jump
-    0100 -> sum, sub, xor_op & r_shift
 
 Instrução I:  imm (16 downto 7) | rd (6 downto 4) | opcode (3 downto 0) -> LD
  obs: rd 111 = acumulador

@@ -2,9 +2,9 @@ A largura da instrução sorteada para a nossa equipe foi de 17 bits.
 Para todas as instruções, os 4 LSB representam o opcode, sendo este igual a:
  - 0000 para a instrução NOP;
  - 0001 para a instrução LD;
- - 0010 para instruções que utilizam a ULA e para a instrução mov;
- - 0011 para a instrução JUMP.
- 
+ - 0010 para instruções que utilizam a ULA e mov;
+ - 0011 para a instrução JUMP;
+
 Para a instrução NOP, a instrução deve ser no formato a seguir:
 
 MSB  b16              b0 LSB
@@ -42,11 +42,11 @@ onde
 
 
 Para a instrução JUMP, temos:
-	
+
 MSB   b16               b0 LSB
       |                 |
 JUMP: iiiiiii xxxxxx 0011
 onde
 	iiiiiii identifica o endereço absoluto do salto;
 	xxxxxx é irrelevante.
-	
+
