@@ -48,18 +48,18 @@ architecture a_ula of ula is
     signal of_sum, of_sub                      : std_logic := '0';
 
     begin
-    adder0: adder   
+    adder0: adder
         port map(
             in0 => in0,
             in1 => in1,
             sum => sum
         );
-    subtractor0: subtractor 
+    subtractor0: subtractor
         port map(
             in0 => in0,
             in1 => in1,
             sub => sub
-        ); 
+        );
     xor0: xor_op
         port map(
             in0 => in0,
@@ -72,7 +72,7 @@ architecture a_ula of ula is
             shift_n => in1(4 downto 0),
             shifted => shifted
         );
-    mux0: mux16b 
+    mux0: mux16b
         port map(
             entr0 => sum,
             entr1 => sub,
@@ -81,7 +81,7 @@ architecture a_ula of ula is
             sel => sel,
             saida => mux_out
         );
-    
+
     saida <= mux_out;
 
     negative <= mux_out(15);
@@ -89,9 +89,10 @@ architecture a_ula of ula is
     zero <= '1' when mux_out = "0000000000000000" else
             '0';
 
-    of_sum <= '1' when (in0(15) = in1(15) and mux_out(15) /= in0(15)) else 
+    of_sum <= '1' when (in0(15) = in1(15) and mux_out(15) /= in0(15)) else
               '0';
-    of_sub <= '1' when (in0(15) /= in1(15) and mux_out(15) = in0(15)) else 
+
+    of_sub <= '1' when (in0(15) /= in1(15) and mux_out(15) = in0(15)) else
               '0';
 
     overflow <= of_sum when sel = "00" else

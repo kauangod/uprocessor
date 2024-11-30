@@ -21,49 +21,49 @@ architecture a_PC_tb of PC_tb is
     signal clk, reset, wr_en : std_logic;
     signal data_in, data_out : unsigned(6 downto 0) := (others => '0');
 
+begin
+    uut: PC
+    port map(
+        clk => clk,
+        reset => reset,
+        wr_en => wr_en,
+        data_in => data_in,
+        data_out => data_out
+    );
+
+    data_in <= data_out + 1;
+
+    reset_global: process
     begin
-        uut: PC
-        port map(
-            clk => clk,
-            reset => reset,
-            wr_en => wr_en,
-            data_in => data_in,
-            data_out => data_out
-        );
+        reset <= '1';
+        wait for period_time * 2;
+        reset <= '0';
+        wait;
+    end process;
 
-        data_in <= data_out + 1;
+    sim_time_proc: process
+    begin
+        wait for 10 us;
+        finished <= '1';
+        wait;
+    end process;
 
-        reset_global: process
-        begin
-            reset <= '1';
-            wait for period_time * 2;
-            reset <= '0';
-            wait;
-        end process;
-    
-        sim_time_proc: process
-        begin
-            wait for 10 us;
-            finished <= '1';
-            wait;
-        end process;
-    
-        clk_proc: process
-        begin
-            while finished /= '1' loop
-                clk <= '0';
-                wait for period_time / 2;
-                clk <= '1';
-                wait for period_time / 2;
-            end loop;
-            wait;
-        end process;
+    clk_proc: process
+    begin
+        while finished /= '1' loop
+            clk <= '0';
+            wait for period_time / 2;
+            clk <= '1';
+            wait for period_time / 2;
+        end loop;
+        wait;
+    end process;
 
-        process
-        begin
-            wait for 200 ns;
-            wr_en <= '1';
-            wait for 100 ns;
-            wait;
-        end process;
+    process
+    begin
+        wait for 200 ns;
+        wr_en <= '1';
+        wait for 100 ns;
+        wait;
+    end process;
 end architecture;

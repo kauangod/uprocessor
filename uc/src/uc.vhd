@@ -3,22 +3,22 @@ use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
 entity UC is
-  port (
-    clk         : in std_logic;
-    reset       : in std_logic;
-    instruction : in unsigned(16 downto 0) := (others => '0');
-    pc_wr_en    : out std_logic;
-    ir_wr_en    : out std_logic;
-    rs          : out unsigned(2 downto 0)  := (others => '0');
-    rd          : out unsigned(2 downto 0)  := (others => '0');
-    imm         : out unsigned(15 downto 0) := (others => '0');
-    ld          : out std_logic;
-    jump        : out std_logic;
-    mov         : out std_logic;
-    ula_op_sel  : out unsigned(1 downto 0) := (others => '0');
-    ula_op      : out std_logic;
-    state       : out unsigned(1 downto 0) := (others => '0')
-  );
+    port (
+      clk         : in std_logic;
+      reset       : in std_logic;
+      instruction : in unsigned(16 downto 0) := (others => '0');
+      pc_wr_en    : out std_logic;
+      ir_wr_en    : out std_logic;
+      rs          : out unsigned(2 downto 0)  := (others => '0');
+      rd          : out unsigned(2 downto 0)  := (others => '0');
+      imm         : out unsigned(15 downto 0) := (others => '0');
+      ld          : out std_logic;
+      jump        : out std_logic;
+      mov         : out std_logic;
+      ula_op_sel  : out unsigned(1 downto 0) := (others => '0');
+      ula_op      : out std_logic;
+      state       : out unsigned(1 downto 0) := (others => '0')
+    );
 end entity;
 
 architecture a_UC of UC is

@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity state_machine is 
+entity state_machine is
     port(
         clk      : in std_logic;
         reset    : in std_logic;
@@ -21,7 +21,7 @@ begin
             if state_s = "10" then
                 state_s <= "00";
             else
-                state_s <= state_s+1;
+                state_s <= state_s + 1;
             end if;
         end if;
     end process;

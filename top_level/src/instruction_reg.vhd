@@ -13,17 +13,17 @@ entity instruction_reg is
 end entity;
 
 architecture a_instruction_reg of instruction_reg is
-  signal register_s : unsigned(16 downto 0) := "00000000000000000";
+    signal register_s : unsigned(16 downto 0) := "00000000000000000";
 begin
-  process (clk, reset, wr_en)
-  begin
-    if reset = '1' then
-      register_s <= "00000000000000000";
-    elsif wr_en = '1' then
-      if rising_edge(clk) then
-        register_s <= data_in;
+    process (clk, reset, wr_en)
+    begin
+      if reset = '1' then
+        register_s <= "00000000000000000";
+      elsif wr_en = '1' then
+        if rising_edge(clk) then
+          register_s <= data_in;
+        end if;
       end if;
-    end if;
-  end process;
-  data_out <= register_s;
+    end process;
+    data_out <= register_s;
 end architecture;
