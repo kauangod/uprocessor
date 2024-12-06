@@ -26,8 +26,8 @@ Instrução reg: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opco
     ----- ULA -------
         -> 000 - sum
         -> 001 - sub
-        -> 010 - r_shift, obs: rs -> shift_n
-        -> 011 - xor_op
+        -> 010 - xor_op
+        -> 011 - r_shift, obs: rs -> shift_n
     -----------------
         -> 100 - mov (somente A->rd ou rs->A)
         -> 101 - CMPR
