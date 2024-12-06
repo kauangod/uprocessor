@@ -29,5 +29,9 @@ Instrução reg: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opco
         -> 010 - r_shift, obs: rs -> shift_n
         -> 011 - xor_op
     -----------------
-        -> 100 - mov
-Instrução J:  imm (16 downto 10) | opcode (3 downto 0) -> jump
+        -> 100 - mov (somente A->rd ou rs->A)
+        -> 101 - CMPR
+Instrução J: imm (16 downto 10) | funct (9 downto 7) | opcode (3 downto 0) -> jump
+    -> funct:
+        -> 000 - jump
+        -> 001 - CMPI
