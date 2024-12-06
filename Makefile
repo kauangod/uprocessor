@@ -11,7 +11,7 @@ WORKDIR = work
 GHDL_CMD = ghdl
 GHDL_FLAGS  = --ieee=synopsys --warn-no-vital-generic --workdir=$(WORKDIR)
 
-STOP_TIME = 8000ns
+STOP_TIME = 10000ns
 # Simulation break condition
 #GHDL_SIM_OPT = --assert-level=error
 GHDL_SIM_OPT = --stop-time=$(STOP_TIME)

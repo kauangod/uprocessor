@@ -66,6 +66,7 @@ architecture a_processador of processador is
         rd          : out unsigned(2 downto 0)  := (others => '0');
         imm         : out unsigned(15 downto 0) := (others => '0');
         ld          : out std_logic;
+        branch      : out std_logic;
         jump        : out std_logic;
         mov         : out std_logic;
         cmpr        : out std_logic;
@@ -98,14 +99,14 @@ architecture a_processador of processador is
       );
     end component;
 
-    signal out_ula, imm, in_acum, banco_data_in, banco_data_out, out_acum, in_ula         : unsigned(15 downto 0) := (others => '0');
-    signal in_pc, out_pc, out_add1                                                        : unsigned(6 downto 0)  := (others => '0');
-    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en, ula_op, cmpr, cmpi : std_logic             := '0';
-    signal PSW_wr_en, PSW_V, PSW_Z, PSW_N, ULA_V, ULA_Z, ULA_N                            : std_logic                   := '0';
-    signal out_rom, out_inst_reg                                                          : unsigned(16 downto 0) := (others => '0');
-    signal rd, rs, banco_reg_r, banco_reg_wr                                              : unsigned(2 downto 0)  := (others => '0');
-    signal ula_op_s                                                                       : unsigned(1 downto 0)  := (others => '0');
-    signal state                                                                          : unsigned(1 downto 0)  := (others => '0');
+    signal out_ula, imm, in_acum, banco_data_in, banco_data_out, out_acum, in_ula                   : unsigned(15 downto 0) := (others => '0');
+    signal in_pc, out_pc, out_add1                                                                  : unsigned(6 downto 0)  := (others => '0');
+    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en, ula_op, cmpr, cmpi, branch_s : std_logic             := '0';
+    signal PSW_wr_en, PSW_V, PSW_Z, PSW_N, ULA_V, ULA_Z, ULA_N                                      : std_logic                   := '0';
+    signal out_rom, out_inst_reg                                                                    : unsigned(16 downto 0) := (others => '0');
+    signal rd, rs, banco_reg_r, banco_reg_wr                                                        : unsigned(2 downto 0)  := (others => '0');
+    signal ula_op_s                                                                                 : unsigned(1 downto 0)  := (others => '0');
+    signal state                                                                                    : unsigned(1 downto 0)  := (others => '0');
 
 begin
     ULA0 : ULA
@@ -167,6 +168,7 @@ begin
       rd          => rd,
       imm         => imm,
       ld          => ld,
+      branch      => branch_s,
       jump        => jump,
       mov         => mov,
       cmpr        => cmpr,
@@ -200,7 +202,8 @@ begin
 
 
     in_pc <= imm(6 downto 0) when jump = '1' else
-      out_pc + 1;
+          out_pc + imm(6 downto 0) when branch_s = '1' and ((PSW_Z = '1' or PSW_N /= PSW_V) or PSW_N = '1') else
+          out_pc + 1;
 
     in_acum <= imm when ld = '1' and rd = "111" else
       banco_data_out when mov = '1' and rd = "111" else

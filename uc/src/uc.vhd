@@ -13,6 +13,7 @@ entity UC is
       rd          : out unsigned(2 downto 0)  := (others => '0');
       imm         : out unsigned(15 downto 0) := (others => '0');
       ld          : out std_logic;
+      branch      : out std_logic;
       jump        : out std_logic;
       mov         : out std_logic;
       cmpr        : out std_logic;
@@ -56,7 +57,7 @@ begin
     rs <= instruction(12 downto 10);
 
     imm <= (15 downto 10 => instruction(16)) & instruction(16 downto 7) when opcode = "0001" else --LD
-           (15 downto 7 => instruction(16)) & instruction(16 downto 10) when opcode = "0011" else --jump or cmpi
+           (15 downto 7 => instruction(16)) & instruction(16 downto 10) when opcode = "0011" else --jump, cmpi, ble, bmi
            "0000000000000000";
 
     ld <= '1' when opcode = "0001" and state_s = "01" else
@@ -71,17 +72,20 @@ begin
 
     mov <= '1' when opcode = "0010" and funct = "100" else
            '0';
-    
+
     cmpr_s <= '1' when opcode = "0010" and funct = "101" else
               '0';
 
     cmpr <= cmpr_s;
-    
+
     jump <= '1' when opcode = "0011" and funct = "000" and state_s = "01" else
             '0';
 
+    branch <= '1' when opcode = "0011" and (funct = "010" or funct = "011") and state_s = "01" else
+              '0';
+
     cmpi_s <= '1' when opcode = "0011" and funct = "001" and state_s = "01" else
-              '0';    
+              '0';
 
     cmpi <= cmpi_s;
 

@@ -1,27 +1,28 @@
 Codificação das instruções
-mnemônico | opcode (16 downto 13) | funct (xx downto yy) |  observações
-jump      |         0011          |        xxxx          |  endereço (6 downto 0)
-nop       |         0000          |        xxxx          |
-add       |                       |                      | dois operandos apenas, apenas entre registradores
-sub       |                       |                      | dois operandos apenas, apenas entre registradores
-shift_r   |                       |                      |
-xor       |                       |                      |
-LD        |                       |                      | carga de constantes
-BLE       |                       |                      | relativo
-BMI       |                       |                      | relativo
-CMPR      |                       |                      | ou CMPI
-CMPI      |                       |                      | ou CMPR
-
-
+| mnemônico | opcode (16 downto 13) | funct (xx downto yy) | observações                                                  |
+| jump      |         0011          |        xxxx          | endereço (6 downto 0)                                        |
+| nop       |         0000          |        xxxx          |                                                              |
+| add       |                       |                      | dois operandos apenas, apenas entre registrador e acumulador |
+| sub       |                       |                      | dois operandos apenas, apenas entre registrador e acumulador |
+| shift_r   |                       |                      |                                                              |
+| xor       |                       |                      |                                                              |
+| LD        |                       |                      | carga de constantes                                          |
+| BLE       |                       |                      | relativo                                                     |
+| BMI       |                       |                      | relativo                                                     |
+| CMPR      |                       |                      | ou CMPI                                                      |
+| CMPI      |                       |                      | ou CMPR                                                      |
+    -----------------
 opcodes:
     0000 -> nop
     0001 -> LD
     0010 -> regs
     0011 -> jump
-
+    -----------------
+*obs: rd 111 = acumulador
+    -----------------
 Instrução I:  imm (16 downto 7) | rd (6 downto 4) | opcode (3 downto 0) -> LD
- obs: rd 111 = acumulador
-Instrução reg: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opcode (3 downto 0)
+    -----------------
+Instrução R: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opcode (3 downto 0)
     -> funct:
     ----- ULA -------
         -> 000 - sum
@@ -31,7 +32,11 @@ Instrução reg: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opco
     -----------------
         -> 100 - mov (somente A->rd ou rs->A)
         -> 101 - CMPR
-Instrução J: imm (16 downto 10) | funct (9 downto 7) | opcode (3 downto 0) -> jump
+    -----------------
+Instrução J: imm (16 downto 10) | funct (9 downto 7) | opcode (3 downto 0)
     -> funct:
         -> 000 - jump
         -> 001 - CMPI
+        -> 010 - BLE
+        -> 011 - BMI
+    ------------------
