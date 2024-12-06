@@ -43,7 +43,8 @@ begin
       state => state_s
     );
 
-    opcode <= instruction(3 downto 0);
+    opcode <= instruction(3 downto 0) when state_s = "01" else
+            "0000";
 
     funct <= instruction(9 downto 7) when (opcode = "0010" or opcode = "0100");
 
