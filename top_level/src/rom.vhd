@@ -21,13 +21,10 @@ architecture a_rom of rom is
         5  => B"0000000001_111_0001",  -- ld 1 no A
         6  => B"0000_011_000_111_0010", -- add R3 com A(1)
         7  => B"0000_111_100_011_0010", --mov A para R3
-        8  => B"0000010_001_000_0011", --CMPI 2 (Nas instruções do professor aqui é 30, mas aí não dá para ver a forma de onda toda. No entanto, é só substituir os primeiros 7 bits por 0011110)
-        9  => B"1111001_010_000_0011", --BLE -7 (retornando para a soma de R3 com R4 que se inicia no endereço 2)
+        8  => B"0011110_001_000_0011", --CMPI 30
+        9  => B"1111001_010_000_0011", --BLE -7
         10 => B"0000_100_100_111_0010", --mov R4 para A
-        11 => B"0000_111_100_101_0010", --mov A para R5 - Algoritmo do professor acaba aqui, o resto é teste das outras operações.
-        12 => B"0000000000_111_0001",  -- ld 0 no A
-        13 => B"0000_101_101_000_0010", --CMPR R5
-        14 => B"1110010_011_000_0011", --BMI -14
+        11 => B"0000_111_100_101_0010", --mov A para R5
         others => (others => '0')
     );
 
