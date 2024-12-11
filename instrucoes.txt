@@ -2,7 +2,7 @@ opcodes:
     0000 -> nop
     0001 -> LD
     0010 -> regs
-    0011 -> jump
+    0011 -> saltos e CMPI
     -----------------
 *obs: rd 111 = acumulador
     -----------------
