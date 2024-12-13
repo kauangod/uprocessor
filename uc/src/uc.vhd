@@ -13,7 +13,8 @@ entity UC is
       rd          : out unsigned(2 downto 0)  := (others => '0');
       imm         : out unsigned(15 downto 0) := (others => '0');
       ld          : out std_logic;
-      branch      : out std_logic;
+      ble         : out std_logic;
+      bmi         : out std_logic;
       jump        : out std_logic;
       mov         : out std_logic;
       cmpr        : out std_logic;
@@ -81,8 +82,11 @@ begin
     jump <= '1' when opcode = "0011" and funct = "000" and state_s = "01" else
             '0';
 
-    branch <= '1' when opcode = "0011" and (funct = "010" or funct = "011") and state_s = "01" else
-              '0';
+    ble <= '1' when opcode = "0011" and funct = "010" and state_s = "01" else
+           '0';
+    
+    bmi <= '1' when opcode = "0011" and funct = "011" and state_s = "01" else
+           '0';
 
     cmpi_s <= '1' when opcode = "0011" and funct = "001" and state_s = "01" else
               '0';

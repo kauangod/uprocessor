@@ -66,7 +66,8 @@ architecture a_processador of processador is
         rd          : out unsigned(2 downto 0)  := (others => '0');
         imm         : out unsigned(15 downto 0) := (others => '0');
         ld          : out std_logic;
-        branch      : out std_logic;
+        ble         : out std_logic;
+        bmi         : out std_logic;
         jump        : out std_logic;
         mov         : out std_logic;
         cmpr        : out std_logic;
@@ -101,11 +102,11 @@ architecture a_processador of processador is
 
     signal out_ula, imm, in_acum, banco_data_in, banco_data_out, out_acum, in_ula                   : unsigned(15 downto 0) := (others => '0');
     signal in_pc, out_pc, out_add1                                                                  : unsigned(6 downto 0)  := (others => '0');
-    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en, ula_op, cmpr, cmpi, branch_s : std_logic             := '0';
-    signal PSW_wr_en, PSW_V, PSW_Z, PSW_N, ULA_V, ULA_Z, ULA_N                                      : std_logic                   := '0';
+    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en, ula_op, cmpr, cmpi, ble_s    : std_logic             := '0';
+    signal PSW_wr_en, PSW_V, PSW_Z, PSW_N, ULA_V, ULA_Z, ULA_N, bmi_s                               : std_logic             := '0';
     signal out_rom, out_inst_reg                                                                    : unsigned(16 downto 0) := (others => '0');
     signal rd, rs, banco_reg_r, banco_reg_wr                                                        : unsigned(2 downto 0)  := (others => '0');
-    signal ula_op_s                                                                                 : unsigned(1 downto 0)  := (others => '0');
+    signal ula_op_sel_s                                                                             : unsigned(1 downto 0)  := (others => '0');
     signal state                                                                                    : unsigned(1 downto 0)  := (others => '0');
 
 begin
@@ -114,7 +115,7 @@ begin
     (
       in0   => out_acum,
       in1   => in_ula,
-      sel   => ula_op_s,
+      sel   => ula_op_sel_s,
       saida => out_ula,
       overflow => ULA_V,
       zero => ULA_Z,
@@ -168,13 +169,14 @@ begin
       rd          => rd,
       imm         => imm,
       ld          => ld,
-      branch      => branch_s,
+      ble         => ble_s,
+      bmi         => bmi_s,
       jump        => jump,
       mov         => mov,
       cmpr        => cmpr,
       cmpi        => cmpi,
       ula_op      => ula_op,
-      ula_op_sel  => ula_op_s,
+      ula_op_sel  => ula_op_sel_s,
       state       => state
     );
     inst_reg0 : instruction_reg
@@ -202,7 +204,7 @@ begin
 
 
     in_pc <= imm(6 downto 0) when jump = '1' else
-          out_pc + imm(6 downto 0) when branch_s = '1' and ((PSW_Z = '1' or PSW_N /= PSW_V) or PSW_N = '1') else
+          out_pc + imm(6 downto 0) when ((PSW_Z = '1' or PSW_N /= PSW_V) and ble_s = '1') or (PSW_N = '1' and bmi_s = '1') else
           out_pc + 1;
 
     in_acum <= imm when ld = '1' and rd = "111" else
@@ -228,7 +230,7 @@ begin
     banco_reg_r <= rs when (mov = '1' or ula_op = '1' or cmpr = '1') and rs /= "111" else
       (others => '0');
 
-    PSW_wr_en <= CMPI or CMPR;
+    PSW_wr_en <= ula_op or cmpr or cmpi;
 
     state_now <= state;
 end architecture;
