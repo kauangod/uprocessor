@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.118 (w)1999-2023 BSI
-[*] Fri Nov 22 14:49:01 2024
+[*] Fri Dec 06 00:17:53 2024
 [*]
 [dumpfile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor\work\processador_tb.vcd"
-[dumpfile_mtime] "Fri Nov 22 14:43:55 2024"
-[dumpfile_size] 23239
-[savefile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor\lab5.gtkw"
+[dumpfile_mtime] "Fri Dec 06 00:16:00 2024"
+[dumpfile_size] 39120
+[savefile] "C:\Users\Pedro Henrique\Desktop\Estudos\5º Período\Arquitetura e Organização de Computadores\uprocessor\lab6.gtkw"
 [timestart] 0
 [size] 1920 991
-[pos] -74 -74
-*-29.044355 600000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -170 -170
+*-29.044355 1550000000 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] processador_tb.
 [treeopen] processador_tb.uut.
 [sst_width] 208
@@ -45,5 +45,9 @@ processador_tb.uut.banco_regs0.saida_reg4[15:0]
 processador_tb.uut.banco_regs0.saida_reg5[15:0]
 processador_tb.uut.banco_regs0.saida_reg6[15:0]
 processador_tb.uut.out_ula[15:0]
+@28
+processador_tb.uut.psw_v
+processador_tb.uut.psw_z
+processador_tb.uut.psw_n
 [pattern_trace] 1
 [pattern_trace] 0

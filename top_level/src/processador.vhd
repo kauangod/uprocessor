@@ -66,8 +66,12 @@ architecture a_processador of processador is
         rd          : out unsigned(2 downto 0)  := (others => '0');
         imm         : out unsigned(15 downto 0) := (others => '0');
         ld          : out std_logic;
+        ble         : out std_logic;
+        bmi         : out std_logic;
         jump        : out std_logic;
         mov         : out std_logic;
+        cmpr        : out std_logic;
+        cmpi        : out std_logic;
         ula_op_sel  : out unsigned(1 downto 0) := (others => '0');
         ula_op      : out std_logic;
         state       : out unsigned(1 downto 0)
@@ -82,23 +86,40 @@ architecture a_processador of processador is
         data_out : out unsigned(16 downto 0) := (others => '0')
       );
     end component;
+    component PSW
+      port (
+        clk   : in std_logic;
+        reset : in std_logic;
+        wr_en : in std_logic;
+        V_in  : in std_logic;
+        Z_in  : in std_logic;
+        N_in  : in std_logic;
+        V_out : out std_logic;
+        Z_out : out std_logic;
+        N_out : out std_logic
+      );
+    end component;
 
-    signal out_ula, imm, in_acum, banco_data_in, banco_data_out, out_acum     : unsigned(15 downto 0) := (others => '0');
-    signal in_pc, out_pc, out_add1                                            : unsigned(6 downto 0)  := (others => '0');
-    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en, ula_op : std_logic             := '0';
-    signal out_rom, out_inst_reg                                              : unsigned(16 downto 0) := (others => '0');
-    signal rd, rs, banco_reg_r, banco_reg_wr                                  : unsigned(2 downto 0)  := (others => '0');
-    signal ula_op_s                                                           : unsigned(1 downto 0)  := (others => '0');
-    signal state                                                              : unsigned(1 downto 0)  := (others => '0');
+    signal out_ula, imm, in_acum, banco_data_in, banco_data_out, out_acum, in_ula                   : unsigned(15 downto 0) := (others => '0');
+    signal in_pc, out_pc, out_add1                                                                  : unsigned(6 downto 0)  := (others => '0');
+    signal jump, ld, pc_wr_en, ir_wr_en, acum_wr_en, mov, banco_wr_en, ula_op, cmpr, cmpi, ble_s    : std_logic             := '0';
+    signal PSW_wr_en, PSW_V, PSW_Z, PSW_N, ULA_V, ULA_Z, ULA_N, bmi_s                               : std_logic             := '0';
+    signal out_rom, out_inst_reg                                                                    : unsigned(16 downto 0) := (others => '0');
+    signal rd, rs, banco_reg_r, banco_reg_wr                                                        : unsigned(2 downto 0)  := (others => '0');
+    signal ula_op_sel_s                                                                             : unsigned(1 downto 0)  := (others => '0');
+    signal state                                                                                    : unsigned(1 downto 0)  := (others => '0');
 
 begin
     ULA0 : ULA
     port map
     (
-      in0   => banco_data_out,
-      in1   => out_acum,
-      sel   => ula_op_s,
-      saida => out_ula
+      in0   => out_acum,
+      in1   => in_ula,
+      sel   => ula_op_sel_s,
+      saida => out_ula,
+      overflow => ULA_V,
+      zero => ULA_Z,
+      negative => ULA_N
     );
     banco_regs0 : banco_regs
     port map
@@ -148,10 +169,14 @@ begin
       rd          => rd,
       imm         => imm,
       ld          => ld,
+      ble         => ble_s,
+      bmi         => bmi_s,
       jump        => jump,
       mov         => mov,
+      cmpr        => cmpr,
+      cmpi        => cmpi,
       ula_op      => ula_op,
-      ula_op_sel  => ula_op_s,
+      ula_op_sel  => ula_op_sel_s,
       state       => state
     );
     inst_reg0 : instruction_reg
@@ -163,13 +188,31 @@ begin
       data_in  => out_rom,
       data_out => out_inst_reg
     );
+    PSW0 : PSW
+    port map
+    (
+      clk   => clk,
+      reset => reset,
+      wr_en => PSW_wr_en,
+      V_in  => ULA_V,
+      Z_in  => ULA_Z,
+      N_in  => ULA_N,
+      V_out => PSW_V,
+      Z_out => PSW_Z,
+      N_out => PSW_N
+    );
+
 
     in_pc <= imm(6 downto 0) when jump = '1' else
-      out_pc + 1;
+          out_pc + imm(6 downto 0) when ((PSW_Z = '1' or PSW_N /= PSW_V) and ble_s = '1') or (PSW_N = '1' and bmi_s = '1') else
+          out_pc + 1;
 
     in_acum <= imm when ld = '1' and rd = "111" else
       banco_data_out when mov = '1' and rd = "111" else
       out_ula;
+
+    in_ula <= imm when cmpi = '1' else
+              banco_data_out;
 
     acum_wr_en <= '1' when (ld = '1' or mov = '1' or ula_op = '1') and rd = "111" else
       '0';
@@ -179,14 +222,15 @@ begin
 
     banco_data_in <= imm when ld = '1' and rd /= "111" else
       out_acum when mov = '1' and rs = "111" else
-      banco_data_out when mov = '1' and rs /= "111" else
       (others => '0');
 
     banco_reg_wr <= rd when (ld = '1' or mov = '1') and rd /= "111" else
       (others => '0');
 
-    banco_reg_r <= rs when (mov = '1' or ula_op = '1') and rs /= "111" else
+    banco_reg_r <= rs when (mov = '1' or ula_op = '1' or cmpr = '1') and rs /= "111" else
       (others => '0');
+
+    PSW_wr_en <= ula_op or cmpr or cmpi;
 
     state_now <= state;
 end architecture;
