@@ -19,6 +19,9 @@ Instrução R: rs (12 downto 10) | funct (9 downto 7) | rd (6 downto 4) | opcode
         -> 100 - mov (somente A->rd ou rs->A)
         -> 101 - CMPR
     -----------------
+        -> 110 - lw, rs -> guarda o endereço da ram, rd -> guardará o dado
+        -> 111 - sw, rs -> guarda o valor, rd -> guarda o endereço da ram
+    -----------------
 Instrução J: imm (16 downto 10) | funct (9 downto 7) | opcode (3 downto 0)
     -> funct:
         -> 000 - jump
