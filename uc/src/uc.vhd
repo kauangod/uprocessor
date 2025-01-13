@@ -19,6 +19,8 @@ entity UC is
       mov         : out std_logic;
       cmpr        : out std_logic;
       cmpi        : out std_logic;
+      lw          : out std_logic;
+      sw          : out std_logic;
       ula_op_sel  : out unsigned(1 downto 0) := (others => '0');
       ula_op      : out std_logic;
       state       : out unsigned(1 downto 0) := (others => '0')
@@ -48,8 +50,16 @@ begin
       state => state_s
     );
 
-    opcode <= instruction(3 downto 0) when state_s = "01" else
-              "0000";
+
+    PC_wr_en <= '1' when state_s = "01" else
+                '0';
+
+    ir_wr_en <= '1' when state_s = "00" else
+                '0';
+
+    state <= state_s;
+
+    opcode <= instruction(3 downto 0);
 
     funct <= instruction(9 downto 7);
 
@@ -64,27 +74,33 @@ begin
     ld <= '1' when opcode = "0001" and state_s = "01" else
           '0';
 
-    ula_op <= '1' when opcode = "0010" and (funct /= "100" or funct /= "101") else
+    ula_op <= '1' when opcode = "0010" and (funct = "000" or funct = "001" or funct = "010" or funct = "011") and state_s = "01" else
               '0';
 
-    ula_op_sel <= funct (1 downto 0) when opcode = "0010" else
+    ula_op_sel <= funct (1 downto 0) when opcode = "0010" and state_s = "01" else
                   "01" when cmpr_s = '1' or cmpi_s = '1' else
                   "00";
 
-    mov <= '1' when opcode = "0010" and funct = "100" else
+    mov <= '1' when opcode = "0010" and funct = "100" and state_s = "01" else
            '0';
 
-    cmpr_s <= '1' when opcode = "0010" and funct = "101" else
+    cmpr_s <= '1' when opcode = "0010" and funct = "101" and state_s = "01" else
               '0';
 
     cmpr <= cmpr_s;
+
+    lw <= '1' when opcode = "0010" and funct = "110" and state_s = "01" else
+          '0';
+
+    sw <= '1' when opcode = "0010" and funct = "111" and state_s = "01" else
+          '0';
 
     jump <= '1' when opcode = "0011" and funct = "000" and state_s = "01" else
             '0';
 
     ble <= '1' when opcode = "0011" and funct = "010" and state_s = "01" else
            '0';
-    
+
     bmi <= '1' when opcode = "0011" and funct = "011" and state_s = "01" else
            '0';
 
@@ -92,13 +108,5 @@ begin
               '0';
 
     cmpi <= cmpi_s;
-
-    PC_wr_en <= '1' when state_s = "01" else
-                '0';
-
-    ir_wr_en <= '1' when state_s = "00" else
-                '0';
-
-    state <= state_s;
 
 end architecture;

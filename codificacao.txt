@@ -41,9 +41,9 @@ onde
 	xxxx é irrelevante
 	sss identifica o registrador fonte;
 	ddd identifica o registrador destino.
-*Observação: Para as instruções de ULA ou mov, ddd = "111" ou sss = "111" identificam que o respectivo registrador é o acumulador. 
+*Observação: Para estas instruções, ddd = "111" ou sss = "111" identificam que o respectivo registrador é o acumulador. 
 Entretanto, sss = "111" somente funciona na instrução mov e as instruções da ULA sempre tem ddd = "111". 
-Ademais, para a instrução LW, sss guarda o endereço da RAM e ddd guarda o valor a ser armazenado. Para a instrução SW, sss guarda o valor a ser armazenado e ddd guarda o endereço da RAM.
+Ademais, para a instrução LW, sss guarda o endereço da RAM e ddd guarda o valor a ser armazenado (este só pode ser o acumulador). Para a instrução SW, sss guarda o valor a ser armazenado (este só pode ser o acumulador) e ddd guarda o endereço da RAM.
 
 
 Para as instruções de salto e comparação com imediato, temos:
