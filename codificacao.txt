@@ -25,7 +25,7 @@ onde
 *Observação: ddd = "111" identifica que o registrador destino é o acumulador.
 
 
-Para as instruções que utilizam a ULA e para a instrução MOV, temos:
+Para as instruções entre dois registradores, temos:
 
 MSB   b16                 b0 LSB
       |                   |
@@ -43,18 +43,18 @@ onde
 	ddd identifica o registrador destino.
 *Observação: Para estas instruções, ddd = "111" ou sss = "111" identificam que o respectivo registrador é o acumulador. 
 Entretanto, sss = "111" somente funciona na instrução mov e as instruções da ULA sempre tem ddd = "111". 
-Ademais, para a instrução LW, sss guarda o endereço da RAM e ddd guarda o valor a ser armazenado (este só pode ser o acumulador). Para a instrução SW, sss guarda o valor a ser armazenado (este só pode ser o acumulador) e ddd guarda o endereço da RAM.
+Ademais, para a instrução LW, sss guarda o endereço da RAM e ddd guarda o valor armazenado (este só pode ser o acumulador). Para a instrução SW, sss guarda o valor a ser armazenado (este só pode ser o acumulador) e ddd guarda o endereço da RAM.
 
 
 Para as instruções de salto e comparação com imediato, temos:
 
 MSB   b16               b0 LSB
       |                 |
-JUMP: iiiiiii 000xxx 0011
-CMPI: iiiiiii 001xxx 0011
-BLE:  iiiiiii 010xxx 0011
-BMI:  iiiiiii 011xxx 0011
+JUMP: aaaaaaa 000 xxx 0011
+CMPI: iiiiiii 001 xxx 0011
+BLE:  rrrrrrr 010 xxx 0011
+BMI:  rrrrrrr 011 xxx 0011
 onde
-	iiiiiii identifica o endereço absoluto do salto;
+	Para a instrução de comparação, iiiiiii identifica a constante imediata a ser comparada, para os saltos aaaaaaa identifica o endereço absoluto do salto e rrrrrrr identifica o endereço relativo; *********
 	xxx é irrelevante.
 
