@@ -31,8 +31,8 @@ MSB   b16                 b0 LSB
       |                   |
 ADD:  xxxx sss 000 ddd 0010
 SUB:  xxxx sss 001 ddd 0010
-SRLI: xxxx sss 010 ddd 0010 (RIGHT SHIFT)
-XOR:  xxxx sss 011 ddd 0010
+XOR:  xxxx sss 010 ddd 0010
+SRLI: xxxx sss 011 ddd 0010 (RIGHT SHIFT) *****
 MOV:  xxxx sss 100 ddd 0010
 CMPR: xxxx sss 101 ddd 0010
 LW:   xxxx sss 110 ddd 0010
