@@ -38,7 +38,7 @@ begin
 
     sim_time_proc : process
     begin
-      wait for 200 us;
+      wait for 250 us;
       finished <= '1';
       wait;
     end process;
