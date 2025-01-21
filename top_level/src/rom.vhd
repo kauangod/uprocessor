@@ -35,13 +35,13 @@ architecture a_rom of rom is
         19 => B"0000_101_100_111_0010", --mov r5 pro a
         20 => B"0000_111_111_101_0010", --sw a no endereço do r5
         21 => B"0_0000_0000_0000_0000", --nop
-        22 => B"0000_000_110_111_0010",  --lw do dado no endereço guardado no r0 pro a
-        23 => B"0000_001_110_111_0010",  --lw do dado no endereço guardado no r1 pro a
-        24 => B"0000_010_110_111_0010",  --lw do dado no endereço guardado no r2 pro a
-        25 => B"0000_011_110_111_0010",  --lw do dado no endereço guardado no r3 pro a
-        26 => B"0000_100_110_111_0010",  --lw do dado no endereço guardado no r4 pro a
-        27 => B"0000_101_110_111_0010",  --lw do dado no endereço guardado no r5 pro a
-        28 => B"0000_110_110_111_0010",  --lw do dado no endereço guardado no r6 pro a
+        22 => B"0000_000_110_111_0010",  --lw do dado guardado no endereço r0 pro a
+        23 => B"0000_001_110_111_0010",  --lw do dado guardado no endereço r1 pro a
+        24 => B"0000_010_110_111_0010",  --lw do dado guardado no endereço r2 pro a
+        25 => B"0000_011_110_111_0010",  --lw do dado guardado no endereço r3 pro a
+        26 => B"0000_100_110_111_0010",  --lw do dado guardado no endereço r4 pro a
+        27 => B"0000_101_110_111_0010",  --lw do dado guardado no endereço r5 pro a
+        28 => B"0000_110_110_111_0010",  --lw do dado guardado no endereço r6 pro a
         others => (others => '0')
     );
 
