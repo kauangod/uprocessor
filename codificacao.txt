@@ -2,8 +2,8 @@ A largura da instrução sorteada para a nossa equipe foi de 17 bits.
 Para todas as instruções, os 4 LSB representam o opcode, sendo este igual a:
  - 0000 para a instrução NOP;
  - 0001 para a instrução LD;
- - 0010 para instruções que de ULA, a instrução mov e as intruções de leitura e escrita da RAM;
- - 0011 para a instrução JUMP;
+ - 0010 para instruções de ULA, MOV, CMPR, LW E SW;
+ - 0011 para as instruções JUMP, CPMI, BLE E BMI;
 
 Para a instrução NOP, a instrução deve ser no formato a seguir:
 
@@ -32,7 +32,7 @@ MSB   b16                 b0 LSB
 ADD:  xxxx sss 000 ddd 0010
 SUB:  xxxx sss 001 ddd 0010
 XOR:  xxxx sss 010 ddd 0010
-SRLI: xxxx sss 011 ddd 0010 (RIGHT SHIFT) *****
+SRLI: xxxx sss 011 ddd 0010 (RIGHT SHIFT)
 MOV:  xxxx sss 100 ddd 0010
 CMPR: xxxx sss 101 ddd 0010
 LW:   xxxx sss 110 ddd 0010
@@ -55,6 +55,6 @@ CMPI: iiiiiii 001 xxx 0011
 BLE:  rrrrrrr 010 xxx 0011
 BMI:  rrrrrrr 011 xxx 0011
 onde
-	Para a instrução de comparação, iiiiiii identifica a constante imediata a ser comparada, para os saltos aaaaaaa identifica o endereço absoluto do salto e rrrrrrr identifica o endereço relativo; *********
+	Para a instrução de comparação, iiiiiii identifica a constante imediata a ser comparada, para os saltos aaaaaaa identifica o endereço absoluto do salto e rrrrrrr identifica o endereço relativo;
 	xxx é irrelevante.
 
