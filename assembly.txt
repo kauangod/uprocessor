@@ -1,12 +1,66 @@
-LD R3,0
-LD R4,0
-MOV A,R3
-ADD R4
-MOV R4,A
-LD A,1
-ADD R3
-MOV R3,A
-CMPI 30
-BLE -7
-MOV A,R4
-MOV R5,A
+Validação escolhida: Final de loop por detecção do MSB setado usando SHIFT RIGHT
+
+LD A,0    |
+LD R0,0   |
+LD R1,1   |
+LD R2,5   |
+
+MOV R0,A  |
+ADD R1    |
+MOV A,R0  |
+SW A,R0   | LOOP FASE DE INSERÇÃO DE VALORES NA RAM
+SLR R2    |
+CMPI 0    |
+BLE -6    |
+
+LD 2,R0   |
+LD 2,R1   |
+
+MOV R0,A  |
+ADD R1    |
+MOV A,R0  |
+LD 0,A    |
+SW A,R0   | LOOP FASE DE REMOÇÃO DOS MÚLTIPLOS DE 2 DA RAM
+MOV R0,A  |
+SLR R2    |
+CMPI 0    |
+BLE -8    |
+
+LD 3,R0   |
+LD 3,R1   |
+
+MOV R0,A  |
+ADD R1    |
+MOV A,R0  |
+LD 0,A    |
+SW A,R0   | LOOP FASE DE REMOÇÃO DOS MÚLTIPLOS DE 3 DA RAM
+MOV R0,A  |
+SLR R2    |
+CMPI 0    |
+BLE -8    |
+
+LD 5,R0   |
+LD 5,R1   |
+
+MOV R0,A  |
+ADD R1    |
+MOV A,R0  |
+LD 0,A    |
+SW A,R0   | LOOP FASE DE REMOÇÃO DOS MÚLTIPLOS DE 5 DA RAM
+MOV R0,A  |
+SLR R2    |
+CMPI 0    |
+BLE -8    |
+
+LD 1,R0   |
+LD 1,R1   |
+
+MOV R0,A  |
+ADD R1    |
+MOV A,R0  |
+LW A,R0   | LOOP FASE DE LEITURA DA RAM
+MOV A,R6  | REGISTRADOR PARA VISUALIZAÇÃO DA LEITURA
+MOV R0,A  |
+SLR R2    |
+CMPI 0    |
+BLE -8    |
