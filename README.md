@@ -1,0 +1,60 @@
+A largura da instrução sorteada para a nossa equipe foi de 17 bits.
+Para todas as instruções, os 4 LSB representam o opcode, sendo este igual a:
+ - 0000 para a instrução NOP;
+ - 0001 para a instrução LD;
+ - 0010 para instruções de ULA, MOV, CMPR, LW E SW;
+ - 0011 para as instruções JUMP, CPMI, BLE E BMI;
+
+Para a instrução NOP, a instrução deve ser no formato a seguir:
+
+MSB  b16              b0 LSB
+     |                |
+NOP: xxxxxxxxxxxxx 0000
+onde
+	xxxxxxxxxxxxx é irrelevante.
+
+
+Para a instrução LD, temos que a instrução é na forma:
+
+MSB b16               b0 LSB
+    |                 |
+LD: iiiiiiiiii ddd 0001
+onde
+	iiiiiiiiii identifica a constante imediata;
+	ddd identifica o registrador destino.
+*Observação: ddd = "111" identifica que o registrador destino é o acumulador.
+
+
+Para as instruções entre dois registradores, temos:
+
+MSB   b16                 b0 LSB
+      |                   |
+ADD:  xxxx sss 000 ddd 0010
+SUB:  xxxx sss 001 ddd 0010
+XOR:  xxxx sss 010 ddd 0010
+SRLI: xxxx sss 011 ddd 0010 (RIGHT SHIFT)
+MOV:  xxxx sss 100 ddd 0010
+CMPR: xxxx sss 101 ddd 0010
+LW:   xxxx sss 110 ddd 0010
+SW:   xxxx sss 111 ddd 0010
+onde
+	xxxx é irrelevante
+	sss identifica o registrador fonte;
+	ddd identifica o registrador destino.
+*Observação: Para estas instruções, ddd = "111" ou sss = "111" identificam que o respectivo registrador é o acumulador. 
+Entretanto, sss = "111" somente funciona na instrução mov e as instruções da ULA sempre tem ddd = "111". 
+Ademais, para a instrução LW, sss guarda o endereço da RAM e ddd guarda o valor armazenado (este só pode ser o acumulador). Para a instrução SW, sss guarda o valor a ser armazenado (este só pode ser o acumulador) e ddd guarda o endereço da RAM.
+
+
+Para as instruções de salto e comparação com imediato, temos:
+
+MSB   b16               b0 LSB
+      |                 |
+JUMP: aaaaaaa 000 xxx 0011
+CMPI: iiiiiii 001 xxx 0011
+BLE:  rrrrrrr 010 xxx 0011
+BMI:  rrrrrrr 011 xxx 0011
+onde
+	Para a instrução de comparação, iiiiiii identifica a constante imediata a ser comparada, para os saltos aaaaaaa identifica o endereço absoluto do salto e rrrrrrr identifica o endereço relativo;
+	xxx é irrelevante.
+
